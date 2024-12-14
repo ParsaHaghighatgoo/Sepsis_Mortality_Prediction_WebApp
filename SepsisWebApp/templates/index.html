@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sepsis Prediction</title>
+</head>
+<body>
+    <h1>Sepsis Prediction Web App</h1>
+    <form id="prediction-form" method="POST" action="/predict">
+        <label for="urineoutput">Urine Output:</label>
+        <input type="number" name="urineoutput" step="0.1" required><br>
+
+        <label for="lactate_min">Lactate Min:</label>
+        <input type="number" name="lactate_min" step="0.1" required><br>
+
+        <label for="bun_mean">BUN Mean:</label>
+        <input type="number" name="bun_mean" step="0.1" required><br>
+
+        <label for="sysbp_min">SysBP Min:</label>
+        <input type="number" name="sysbp_min" step="1" required><br>
+
+        <label for="metastatic_cancer">Metastatic Cancer (0/1):</label>
+        <input type="number" name="metastatic_cancer" step="1" min="0" max="1" required><br>
+
+        <label for="inr_max">INR Max:</label>
+        <input type="number" name="inr_max" step="0.1" required><br>
+
+        <label for="age">Age:</label>
+        <input type="number" name="age" step="1" required><br>
+
+        <label for="sodium_max">Sodium Max:</label>
+        <input type="number" name="sodium_max" step="0.1" required><br>
+
+        <label for="aniongap_max">Anion Gap Max:</label>
+        <input type="number" name="aniongap_max" step="0.1" required><br>
+
+        <label for="creatinine_min">Creatinine Min:</label>
+        <input type="number" name="creatinine_min" step="0.1" required><br>
+
+        <label for="spo2_mean">SpO2 Mean:</label>
+        <input type="number" name="spo2_mean" step="0.1" required><br>
+
+        <button type="submit">Predict</button>
+    </form>
+    <h2>Result:</h2>
+    <p id="result"></p>
+
+    <script>
+        const form = document.getElementById('prediction-form');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText =
+                `Prediction: ${result.prediction}, Probability: ${result.probability}`;
+        });
+    </script>
+</body>
+</html>

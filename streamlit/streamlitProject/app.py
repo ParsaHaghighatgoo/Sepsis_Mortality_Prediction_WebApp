@@ -79,7 +79,7 @@ if page == "SepsisMortalityPrediction":
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
 
-elif page == "DemographicData":
+elif page == "Sepsis Prediction":
     st.title("Demographic Data in MIMIC")
     st.write("This is the demographic data analysis page for MIMIC.")
 
